@@ -3,6 +3,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.models.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,6 +21,6 @@ public class Course {
     private String description;
 
     @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    private List<Student> students = new ArrayList<>();
 
 }
