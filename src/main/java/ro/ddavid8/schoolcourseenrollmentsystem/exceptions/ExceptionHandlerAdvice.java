@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 @ControllerAdvice
@@ -29,7 +30,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(StudentNotFoundException.class)
     public ResponseEntity<String> studentNotFoundException(StudentNotFoundException studentNotFoundException) {
-        return new ResponseEntity<>(objectToString(Map.of("message", studentNotFoundException.getMessage())), BAD_REQUEST);
+        return new ResponseEntity<>(objectToString(Map.of("message", studentNotFoundException.getMessage())), NOT_FOUND);
     }
 
     private String objectToString(Object response) {
