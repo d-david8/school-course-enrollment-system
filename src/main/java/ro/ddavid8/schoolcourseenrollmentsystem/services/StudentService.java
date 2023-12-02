@@ -6,5 +6,4 @@ import java.time.LocalDate;
 
 public interface StudentService {
     public StudentDTO createStudent(StudentDTO studentDTO);
-
 }

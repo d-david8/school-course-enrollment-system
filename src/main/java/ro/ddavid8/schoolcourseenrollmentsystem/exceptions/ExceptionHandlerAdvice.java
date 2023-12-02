@@ -14,13 +14,16 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @Slf4j
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
+
     private final ObjectMapper objectMapper;
 
     public ExceptionHandlerAdvice(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
+
     @ExceptionHandler(InvalidDataException.class)
     public ResponseEntity<String> studentException(InvalidDataException invalidDataException) {
+        log.error(invalidDataException.getMessage());
         return new ResponseEntity<>(objectToString(Map.of("message", invalidDataException.getMessage())), BAD_REQUEST);
     }
 
