@@ -57,4 +57,12 @@ public class StudentServiceImpl implements StudentService {
         List<Student> studentList = studentRepository.findAll();
         return studentList.stream().map(student -> objectMapper.convertValue(student, StudentDTO.class)).toList();
     }
+
+    @Override
+    public void deleteUserById(Long studentId) {
+        if (studentRepository.existsById(studentId))
+            studentRepository.deleteById(studentId);
+        else
+            throw new StudentNotFoundException("Invalid student id!");
+    }
 }
