@@ -28,7 +28,7 @@ public class CourseServiceImpl implements CourseService {
             Course savedCourse = courseRepository.save(objectMapper.convertValue(courseDTO, Course.class));
             return objectMapper.convertValue(savedCourse, CourseDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidDataException("Invalid course name");
+            throw new InvalidDataException("Course already exist!");
         }
     }
 }
