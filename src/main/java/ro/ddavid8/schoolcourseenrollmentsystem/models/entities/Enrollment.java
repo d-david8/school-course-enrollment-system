@@ -12,8 +12,8 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enrollment_id")
-    private Long enrolmentId;
+    @Column(name = "id")
+    private Long id;
     @Column(name = "enrollment_date")
     private LocalDate enrolmentDate;
     @Column(name = "progress")
@@ -25,5 +25,4 @@ public class Enrollment {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-
 }

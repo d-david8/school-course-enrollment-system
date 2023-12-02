@@ -1,11 +1,14 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.models.entities;
 
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,21 +17,30 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
-    private Long studentId;
+    @Column(name = "id")
+    private Long id;
+    @Size(min = 3, message = "{validation.first_name.size.too_short}")
+    @Size(max = 200, message = "{validation.first_name.size.too_long}")
     @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last-name", nullable = false)
+    @Size(min = 3, message = "{validation.last_name.size.too_short}")
+    @Size(max = 200, message = "{validation.last_name.size.too_long}")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Size(min = 3, message = "{validation.email.size.too_short}")
+    @Size(max = 200, message = "{validation.email.size.too_long}")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Column(name= "created_at")
+    private LocalDateTime createdAt;
 
     @ManyToMany
     @JoinTable(
             name = "enrollments",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses = new ArrayList<>();
+    private Set<Course> courses = new HashSet<>();
 }

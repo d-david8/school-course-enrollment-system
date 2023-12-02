@@ -7,9 +7,4 @@ import java.time.LocalDate;
 public interface StudentService {
     public StudentDTO createStudent(StudentDTO studentDTO);
 
-    public StudentDTO getStudents(Long studentId, String firstName, String lastName, LocalDate birthDate);
-
-    public StudentDTO updateStudent(StudentDTO studentDTO);
-
-    public String deleteStudentById(StudentDTO studentDTO);
 }
