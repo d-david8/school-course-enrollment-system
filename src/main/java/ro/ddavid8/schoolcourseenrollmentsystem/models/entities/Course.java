@@ -6,7 +6,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -29,5 +31,5 @@ public class Course {
     private LocalDateTime createdAt;
 
     @ManyToMany(mappedBy = "courses")
-    private List<Student> students = new ArrayList<>();
+    private Set<Student> students = new HashSet<>();
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.InvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundException;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.StudentRepository;
@@ -30,6 +31,23 @@ public class StudentServiceImpl implements StudentService {
             return objectMapper.convertValue(studentSaved, StudentDTO.class);
         } catch (DataIntegrityViolationException e) {
             throw new InvalidDataException("Student already exist!");
+        }
+    }
+
+    @Override
+    public StudentDTO updateStudent(Long studentId, StudentDTO studentDTO) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() ->
+                new StudentNotFoundException("Invalid student id!"));
+        try {
+            student.setFirstName(studentDTO.getFirstName());
+            student.setLastName(studentDTO.getLastName());
+            student.setEmail(studentDTO.getEmail());
+            student.setBirthDate(studentDTO.getBirthDate());
+
+            Student savedStudent = studentRepository.save(student);
+            return objectMapper.convertValue(savedStudent, StudentDTO.class);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Invalid email address");
         }
     }
 }
