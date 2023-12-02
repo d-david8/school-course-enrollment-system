@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
             Student studentSaved = studentRepository.save(objectMapper.convertValue(studentDTO, Student.class));
             return objectMapper.convertValue(studentSaved, StudentDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidDataException("Invalid email address");
+            throw new InvalidDataException("Student already exist!");
         }
     }
 }
