@@ -31,12 +31,12 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
         Optional<Student> optionalStudent = studentRepository.findById(enrollmentDTO.getStudentId());
         if (optionalStudent.isEmpty()) {
-            throw new InvalidDataException("Invalid student id");
+            throw new InvalidDataException("Invalid student id!");
         }
         Student student = optionalStudent.get();
         Optional<Course> optionalCourse = courseRepository.findById(enrollmentDTO.getCourseId());
         if (optionalCourse.isEmpty()) {
-            throw new InvalidDataException("Invalid course id");
+            throw new InvalidDataException("Invalid course id!");
         }
         Course course = optionalCourse.get();
         if (enrollmentRepository.existsByStudentAndCourse(student, course)) {
@@ -51,7 +51,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
 
         EnrollmentDTO enrollmentDTOResponse = new EnrollmentDTO();
-
         enrollmentDTOResponse.setId(savedEnrollment.getId());
         enrollmentDTOResponse.setStudentId(savedEnrollment.getStudent().getId());
         enrollmentDTOResponse.setCourseId(savedEnrollment.getCourse().getId());
