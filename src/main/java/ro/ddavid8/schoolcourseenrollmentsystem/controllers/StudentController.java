@@ -3,10 +3,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.StudentService;
 
@@ -24,5 +21,10 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         return ResponseEntity.ok(studentService.createStudent(studentDTO));
+    }
+
+    @PutMapping("/{studentId}")
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTO studentDTO) {
+        return ResponseEntity.ok(studentService.updateStudent(studentId, studentDTO));
     }
 }

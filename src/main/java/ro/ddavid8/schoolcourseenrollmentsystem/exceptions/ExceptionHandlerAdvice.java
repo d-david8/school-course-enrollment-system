@@ -27,6 +27,11 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(objectToString(Map.of("message", invalidDataException.getMessage())), BAD_REQUEST);
     }
 
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ResponseEntity<String> studentNotFoundException(StudentNotFoundException studentNotFoundException) {
+        return new ResponseEntity<>(objectToString(Map.of("message", studentNotFoundException.getMessage())), BAD_REQUEST);
+    }
+
     private String objectToString(Object response) {
         try {
             return objectMapper.writeValueAsString(response);
