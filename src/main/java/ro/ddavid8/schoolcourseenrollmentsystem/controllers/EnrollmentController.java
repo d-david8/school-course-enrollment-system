@@ -1,5 +1,6 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import ro.ddavid8.schoolcourseenrollmentsystem.services.EnrollmentService;
 @Validated
 @RestController
 @RequestMapping("/api/enrollments")
+@Tag(name = "Courses APIs", description = "Endpoints for managing the enrolments")
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
