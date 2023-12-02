@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.StudentService;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequestMapping("/api/students")
@@ -26,5 +28,10 @@ public class StudentController {
     @PutMapping("/{studentId}")
     public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTO studentDTO) {
         return ResponseEntity.ok(studentService.updateStudent(studentId, studentDTO));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 }

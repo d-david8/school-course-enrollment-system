@@ -10,6 +10,7 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.StudentRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -49,5 +50,11 @@ public class StudentServiceImpl implements StudentService {
         } catch (DataIntegrityViolationException e) {
             throw new InvalidDataException("Invalid email address");
         }
+    }
+
+    @Override
+    public List<StudentDTO> getAllStudents() {
+        List<Student> studentList = studentRepository.findAll();
+        return studentList.stream().map(student -> objectMapper.convertValue(student, StudentDTO.class)).toList();
     }
 }
