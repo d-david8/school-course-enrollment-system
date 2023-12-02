@@ -8,5 +8,5 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
-    boolean existsByStudentAndCourse(Student student, Course course);
+    boolean existsByStudentAndCourse(Student student,  Course course);
 }
