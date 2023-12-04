@@ -74,7 +74,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteUserById(Long studentId) {
+    public void deleteStudentById(Long studentId) {
         if (studentRepository.existsById(studentId)) {
             studentRepository.deleteById(studentId);
             log.info("Student with id {} was deleted  with success!", studentId);

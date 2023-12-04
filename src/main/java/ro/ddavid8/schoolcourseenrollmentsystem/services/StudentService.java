@@ -1,6 +1,5 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
-import org.springframework.data.util.Pair;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 
@@ -13,5 +12,5 @@ public interface StudentService {
 
     public List<StudentDTO> getAllStudents();
 
-    public void deleteUserById(Long studentId);
+    public void deleteStudentById(Long studentId);
 }

@@ -1,6 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -19,12 +20,13 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Size(min = 3, message = "{validation.course_name.size.too_short}")
-    @Size(max = 200, message = "{validation.course_name.size.too_long}")
+    @NotNull(message = "Course name is mandatory.")
+    @Size(min = 3, message = "The course name must contain a minimum of 3 characters.")
+    @Size(max = 200, message = "The course name must contain a maximum of 200 characters.")
     @Column(name = "course_name", nullable = false, unique = true)
     private String courseName;
-    @Size(min = 3, message = "{validation.course_description.size.too_short}")
-    @Size(max = 200, message = "{validation.course_description.size.too_long}")
+    @Size(min = 3, message = "The course description must contain a minimum of 3 characters.")
+    @Size(max = 200, message = "The course description must contain a maximum of 200 characters.")
     @Column(name = "description")
     private String description;
     @Column(name = "created_at")
