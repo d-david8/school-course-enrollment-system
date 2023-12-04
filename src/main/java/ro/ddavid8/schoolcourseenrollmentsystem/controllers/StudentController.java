@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.StudentService;
 
 import java.util.List;
@@ -25,12 +26,12 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {
-        return new ResponseEntity(studentService.createStudent(studentDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(studentService.createStudent(studentDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTO studentDTO) {
-        return ResponseEntity.ok(studentService.updateStudent(studentId, studentDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentUpdateDTO> updateStudent(@PathVariable Long id, @Valid @RequestBody StudentUpdateDTO studentUpdateDTO) {
+        return ResponseEntity.ok(studentService.updateStudent(id, studentUpdateDTO));
     }
 
     @GetMapping
@@ -38,8 +39,8 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @DeleteMapping("/{studentId}")
-    public void deleteStudentById(@PathVariable Long studentId) {
-        studentService.deleteUserById(studentId);
+    @DeleteMapping("/{id}")
+    public void deleteStudentById(@PathVariable Long id) {
+        studentService.deleteUserById(id);
     }
 }

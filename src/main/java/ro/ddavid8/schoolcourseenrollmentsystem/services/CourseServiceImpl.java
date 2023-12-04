@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.InvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.CourseInvalidDataException;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.CourseDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CourseRepository;
@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
             Course savedCourse = courseRepository.save(objectMapper.convertValue(courseDTO, Course.class));
             return objectMapper.convertValue(savedCourse, CourseDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidDataException("Course already exist!");
+            throw new CourseInvalidDataException("Course already exist!");
         }
     }
 
