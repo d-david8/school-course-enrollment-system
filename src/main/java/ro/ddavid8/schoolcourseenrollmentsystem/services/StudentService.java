@@ -1,5 +1,6 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.CourseDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 
@@ -13,4 +14,5 @@ public interface StudentService {
     public List<StudentDTO> getAllStudents();
 
     public void deleteStudentById(Long studentId);
+
 }
