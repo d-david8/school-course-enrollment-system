@@ -1,7 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.EntityManager;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
@@ -18,19 +18,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
-
     private final CustomCourseRepository customCourseRepository;
     private final ObjectMapper objectMapper;
-
-    public CourseServiceImpl(CourseRepository courseRepository, ObjectMapper objectMapper, EntityManager entityManager, CustomCourseRepository customCourseRepository) {
-        this.courseRepository = courseRepository;
-        this.objectMapper = objectMapper;
-        this.customCourseRepository = customCourseRepository;
-    }
 
     @Override
     public CourseDTO createCourse(CourseDTO courseDTO) {
@@ -50,6 +44,13 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courseResult = customCourseRepository.findCoursesByCriteria(courseName, description, sort);
         log.info("Data successfully fetched for courses.");
         return courseResult.stream().map(course -> objectMapper.convertValue(course, CourseDTO.class)).toList();
+    }
+
+    @Override
+    public CourseDTO getCourseById(Long id) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Invalid course id."));
+        log.info("Data successfully fetched for course with id {}.", course.getId());
+        return objectMapper.convertValue(course, CourseDTO.class);
     }
 
     @Override

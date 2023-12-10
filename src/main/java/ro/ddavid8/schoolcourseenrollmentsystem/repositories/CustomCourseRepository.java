@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CustomCourseRepository {
+
     public List<Course> findCoursesByCriteria(String courseName, String description, Sort sort);
 }

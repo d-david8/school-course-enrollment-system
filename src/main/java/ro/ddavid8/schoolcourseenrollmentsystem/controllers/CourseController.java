@@ -37,6 +37,11 @@ public class CourseController {
         return ResponseEntity.ok(courseService.findCoursesByCriteria(courseName, description, orderBy, orderDirection));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id){
+        return ResponseEntity.ok(courseService.getCourseById(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO){
             return ResponseEntity.ok(courseService.updateCourse(id, courseDTO));

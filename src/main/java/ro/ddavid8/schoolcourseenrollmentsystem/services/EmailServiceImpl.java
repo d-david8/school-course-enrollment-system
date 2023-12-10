@@ -2,22 +2,19 @@ package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EmailDTO;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
-
-    public EmailServiceImpl(JavaMailSender javaMailSender, TemplateEngine templateEngine) {
-        this.javaMailSender = javaMailSender;
-    }
 
     @Override
     public void sendEmail(EmailDTO emailDTO) {
@@ -34,7 +31,7 @@ public class EmailServiceImpl implements EmailService {
             javaMailSender.send(mimeMessage);
             log.info("Email to {}, was sent.", emailDTO.getTo());
         } catch (MessagingException e) {
-            log.info("The email could not be send!");
+            log.info("Email to {}, could not be sent.", emailDTO.getTo());
         }
     }
 }
