@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.AuthenticateRequest;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.JwtAuthenticationResponse;
-import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.SignInRequest;
-import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.SignUpRequest;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.RegisterRequest;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.AuthenticationService;
 
 @RestController
@@ -18,12 +18,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public JwtAuthenticationResponse signup(@RequestBody SignUpRequest request) {
-        return authenticationService.signup(request);
+    public JwtAuthenticationResponse register(@RequestBody RegisterRequest request) {
+        return authenticationService.register(request);
     }
 
     @PostMapping("/authentication")
-    public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
-        return authenticationService.signin(request);
+    public JwtAuthenticationResponse authenticate(@RequestBody AuthenticateRequest request) {
+        return authenticationService.authenticate(request);
     }
 }

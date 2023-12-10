@@ -1,4 +1,4 @@
-package ro.ddavid8.schoolcourseenrollmentsystem.config;
+package ro.ddavid8.schoolcourseenrollmentsystem.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ro.ddavid8.schoolcourseenrollmentsystem.filter.JwtAuthenticationFilter;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Role;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.UserService;
 
 @Configuration
@@ -49,11 +50,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/register", "/api/authentication").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/authentication", "/api/register").permitAll()
+                        .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

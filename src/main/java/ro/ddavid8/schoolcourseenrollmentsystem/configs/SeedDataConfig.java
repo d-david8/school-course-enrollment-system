@@ -1,4 +1,4 @@
-package ro.ddavid8.schoolcourseenrollmentsystem.config;
+package ro.ddavid8.schoolcourseenrollmentsystem.configs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,16 +23,14 @@ public class SeedDataConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         if (userRepository.count() == 0) {
-
             User admin = User
                     .builder()
-                    .firstName("admin")
-                    .lastName("admin")
+                    .firstName("Dan")
+                    .lastName("David")
                     .username("admin")
                     .password(passwordEncoder.encode("password"))
                     .role(Role.ADMIN)
                     .build();
-
             userService.save(admin);
             log.debug("created ADMIN user - {}", admin);
         }

@@ -5,7 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,14 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
-public class JwtService{
+@AllArgsConstructor
+public class JwtService {
 
-    @Value("${token.secret.key}")
-    String jwtSecretKey;
-
-    @Value("${token.expiration.ms}")
-    Long jwtExpirationMs;
+    private final Environment environment;
 
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -48,7 +47,7 @@ public class JwtService{
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .setExpiration(new Date(System.currentTimeMillis() + Integer.parseInt(Objects.requireNonNull(environment.getProperty("token.expiration.ms")))))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -71,7 +70,7 @@ public class JwtService{
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSecretKey);
+        byte[] keyBytes = Decoders.BASE64.decode(environment.getProperty("token.secret.key"));
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
