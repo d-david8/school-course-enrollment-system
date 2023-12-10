@@ -5,11 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.env.Environment;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.StudentRepository;
+import ro.ddavid8.schoolcourseenrollmentsystem.services.EmailService;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.StudentServiceImpl;
-import ro.ddavid8.schoolcourseenrollmentsystem.util.EmailValidator;
+import ro.ddavid8.schoolcourseenrollmentsystem.services.TemplateBuilderService;
 
 import java.time.LocalDateTime;
 
@@ -26,14 +28,18 @@ class StudentTest {
     private ObjectMapper objectMapper;
     private StudentServiceImpl studentService;
     private LocalDateTime createdAt;
+    private TemplateBuilderService templateBuilderService;
+    private EmailService emailService;
+    private Environment environment;
 
     @BeforeEach
     void setUp() {
         studentRepository = mock(StudentRepository.class);
         objectMapper = mock(ObjectMapper.class);
-        studentService = new StudentServiceImpl(studentRepository, objectMapper);
+        studentService = new StudentServiceImpl(studentRepository, emailService, objectMapper, templateBuilderService, environment);
         createdAt = LocalDateTime.now();
     }
+
 
     @Test
     void createStudent_ShouldPass() {

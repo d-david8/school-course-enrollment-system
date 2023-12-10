@@ -1,8 +1,12 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.EnrollmentInvalidDataException;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundException;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EmailDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EnrollmentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Enrollment;
@@ -15,17 +19,16 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
-
-    public EnrollmentServiceImpl(EnrollmentRepository enrollmentRepository, StudentRepository studentRepository, CourseRepository courseRepository) {
-        this.enrollmentRepository = enrollmentRepository;
-        this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
-    }
+    private final EmailService emailService;
+    private final TemplateBuilderService templateBuilderService;
+    private final Environment environment;
+    private final ObjectMapper objectMapper;
 
     @Override
     public EnrollmentDTO enroll(EnrollmentDTO enrollmentDTO) {
@@ -48,8 +51,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollment.setCourse(optionalCourse.get());
         enrollment.setEnrolmentDate(LocalDate.now());
         enrollment.setProgress(0);
-
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
+
+        EmailDTO emailDTO = EmailDTO.builder()
+                .from(environment.getProperty("application.sender.email"))
+                .to(environment.getProperty("application.recipient.emil"))
+                .subject("Welcome to course " + course.getCourseName())
+                .body(templateBuilderService.createEnrollmentBodyEmail(student, course))
+                .build();
+        emailService.sendEmail(emailDTO);
 
         EnrollmentDTO enrollmentDTOResponse = new EnrollmentDTO();
         enrollmentDTOResponse.setId(savedEnrollment.getId());
