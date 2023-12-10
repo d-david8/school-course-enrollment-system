@@ -1,10 +1,13 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.InvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.CourseInvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.CourseNotFoundException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundException;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.CourseDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CourseRepository;
@@ -12,6 +15,7 @@ import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CourseRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -28,9 +32,10 @@ public class CourseServiceImpl implements CourseService {
         try {
             courseDTO.setCreatedAt(LocalDateTime.now());
             Course savedCourse = courseRepository.save(objectMapper.convertValue(courseDTO, Course.class));
+            log.info("Course with id {} was successfully saved", savedCourse.getId());
             return objectMapper.convertValue(savedCourse, CourseDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidDataException("Course already exist!");
+            throw new CourseInvalidDataException("Course already exist!");
         }
     }
 
@@ -48,6 +53,33 @@ public class CourseServiceImpl implements CourseService {
         } else {
             courseResult = courseRepository.findAll(sort);
         }
+        log.info("Data successfully fetched.");
         return courseResult.stream().map(course -> objectMapper.convertValue(course, CourseDTO.class)).toList();
+    }
+
+    @Override
+    public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Invalid course id."));
+        course.setCourseName(courseDTO.getCourseName());
+        if (courseDTO.getDescription() != null) {
+            course.setDescription(courseDTO.getDescription());
+        }
+        try {
+            Course savedCourse = courseRepository.save(course);
+            log.info("The course with id {} was successfully updates", savedCourse.getId());
+            return objectMapper.convertValue(savedCourse, CourseDTO.class);
+        } catch (DataIntegrityViolationException e) {
+            throw new CourseInvalidDataException("The course name already exists.");
+        }
+    }
+    @Override
+    public void deleteCourse(Long id){
+        if (courseRepository.existsById(id)) {
+            courseRepository.deleteById(id);
+            log.info("Course with id {} was deleted  with success!", id);
+        }
+        else {
+            throw new StudentNotFoundException("Invalid course id!");
+        }
     }
 }

@@ -8,4 +8,8 @@ public interface CourseService {
     public CourseDTO createCourse(CourseDTO courseDTO);
 
     public List<CourseDTO> getAllCoursesFilteredAndSorted(String courseName, String description, String orderBy, String orderDirection);
+
+    CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+
+    void deleteCourse(Long id);
 }
