@@ -1,7 +1,8 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import org.springframework.stereotype.Service;
-import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.InvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.EnrollmentInvalidDataException;
+import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundException;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EnrollmentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Enrollment;
@@ -31,16 +32,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
         Optional<Student> optionalStudent = studentRepository.findById(enrollmentDTO.getStudentId());
         if (optionalStudent.isEmpty()) {
-            throw new InvalidDataException("Invalid student id!");
+            throw new StudentNotFoundException("Invalid student id!");
         }
         Student student = optionalStudent.get();
         Optional<Course> optionalCourse = courseRepository.findById(enrollmentDTO.getCourseId());
         if (optionalCourse.isEmpty()) {
-            throw new InvalidDataException("Invalid course id!");
+            throw new StudentNotFoundException("Invalid course id!");
         }
         Course course = optionalCourse.get();
         if (enrollmentRepository.existsByStudentAndCourse(student, course)) {
-            throw new InvalidDataException("Student already enrolled at this course!");
+            throw new EnrollmentInvalidDataException("Student already enrolled at this course!");
         }
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(optionalStudent.get());

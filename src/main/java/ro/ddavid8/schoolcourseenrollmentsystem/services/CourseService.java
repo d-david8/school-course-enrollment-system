@@ -7,5 +7,9 @@ import java.util.List;
 public interface CourseService {
     public CourseDTO createCourse(CourseDTO courseDTO);
 
-    public List<CourseDTO> getAllCoursesFilteredAndSorted(String courseName, String description, String orderBy, String orderDirection);
+    public List<CourseDTO> findCoursesByCriteria(String courseName, String description, String orderBy, String orderDirection);
+
+    CourseDTO updateCourse(Long id, CourseDTO courseDTO);
+
+    void deleteCourse(Long id);
 }

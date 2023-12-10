@@ -2,6 +2,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.models.entities;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -19,16 +20,19 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Size(min = 3, message = "{validation.first_name.size.too_short}")
-    @Size(max = 200, message = "{validation.first_name.size.too_long}")
+    @NotNull(message = "The first name is mandatory")
+    @Size(min = 3, message = "The first name must contain a minimum of 3 characters.")
+    @Size(max = 200, message = "The first name must contain a maximum of 200 characters.")
     @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Size(min = 3, message = "{validation.last_name.size.too_short}")
-    @Size(max = 200, message = "{validation.last_name.size.too_long}")
+    @NotNull(message = "The last name is mandatory")
+    @Size(min = 3, message = "The last name must contain a minimum of 3 characters.")
+    @Size(max = 200, message = "The last name must contain a maximum of 200 characters.")
     @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Size(min = 3, message = "{validation.email.size.too_short}")
-    @Size(max = 200, message = "{validation.email.size.too_long}")
+    @NotNull(message = "The first email is mandatory")
+    @Size(min = 3, message = "The email must contain a minimum of 3 characters.")
+    @Size(max = 200, message = "The email must contain a maximum of 200 characters.")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Column(name = "birth_date")
