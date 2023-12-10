@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email Template</title>
+</head>
+<body>
+<h1>Hello, <span th:text="${name}">User</span>!</h1><br>
+<h3> We're excited to let you know that your account has been successfully created! </h3><br>
+<h3> You can check your account <a th:href="@{${url}}">here</a>.</h3>
+</body>
+</html>
