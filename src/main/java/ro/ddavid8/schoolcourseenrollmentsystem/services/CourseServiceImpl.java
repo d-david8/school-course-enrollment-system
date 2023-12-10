@@ -1,6 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
@@ -11,6 +12,7 @@ import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundExcepti
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.CourseDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CourseRepository;
+import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CustomCourseRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,11 +22,14 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+
+    private final CustomCourseRepository customCourseRepository;
     private final ObjectMapper objectMapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository, ObjectMapper objectMapper) {
+    public CourseServiceImpl(CourseRepository courseRepository, ObjectMapper objectMapper, EntityManager entityManager, CustomCourseRepository customCourseRepository) {
         this.courseRepository = courseRepository;
         this.objectMapper = objectMapper;
+        this.customCourseRepository = customCourseRepository;
     }
 
     @Override
@@ -40,20 +45,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseDTO> getAllCoursesFilteredAndSorted(String courseName, String description, String orderBy, String orderDirection) {
-        List<Course> courseResult;
+    public List<CourseDTO> findCoursesByCriteria(String courseName, String description, String orderBy, String orderDirection) {
         Sort sort = Sort.by(orderDirection.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, orderBy);
-
-        if (courseName != null && description != null) {
-            courseResult = courseRepository.findByCourseNameContainingIgnoreCaseAndDescriptionContainingIgnoreCase(courseName, description, sort);
-        } else if (courseName != null) {
-            courseResult = courseRepository.findByCourseNameContainingIgnoreCase(courseName, sort);
-        } else if (description != null) {
-            courseResult = courseRepository.findByDescriptionContainingIgnoreCase(description, sort);
-        } else {
-            courseResult = courseRepository.findAll(sort);
-        }
-        log.info("Data successfully fetched.");
+        List<Course> courseResult = customCourseRepository.findCoursesByCriteria(courseName, description, sort);
+        log.info("Data successfully fetched for courses.");
         return courseResult.stream().map(course -> objectMapper.convertValue(course, CourseDTO.class)).toList();
     }
 
@@ -72,13 +67,13 @@ public class CourseServiceImpl implements CourseService {
             throw new CourseInvalidDataException("The course name already exists.");
         }
     }
+
     @Override
-    public void deleteCourse(Long id){
+    public void deleteCourse(Long id) {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
             log.info("Course with id {} was deleted  with success!", id);
-        }
-        else {
+        } else {
             throw new StudentNotFoundException("Invalid course id!");
         }
     }

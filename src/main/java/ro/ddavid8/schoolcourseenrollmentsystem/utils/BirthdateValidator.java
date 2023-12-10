@@ -1,4 +1,4 @@
-package ro.ddavid8.schoolcourseenrollmentsystem.util;
+package ro.ddavid8.schoolcourseenrollmentsystem.utils;
 
 import lombok.experimental.UtilityClass;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentInvalidDataException;

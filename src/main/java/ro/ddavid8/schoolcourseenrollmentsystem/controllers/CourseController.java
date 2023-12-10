@@ -29,12 +29,12 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> getAllCoursesFilteredAndSorted(
+    public ResponseEntity<List<CourseDTO>> findCoursesByCriteria(
             @RequestParam(required = false) String courseName,
             @RequestParam(required = false) String description,
-            @RequestParam(required = false, defaultValue = "courseName") String orderBy,
+            @RequestParam(required = false, defaultValue = "id") String orderBy,
             @RequestParam(required = false, defaultValue = "asc") String orderDirection) {
-        return ResponseEntity.ok(courseService.getAllCoursesFilteredAndSorted(courseName, description, orderBy, orderDirection));
+        return ResponseEntity.ok(courseService.findCoursesByCriteria(courseName, description, orderBy, orderDirection));
     }
 
     @PutMapping("/{id}")

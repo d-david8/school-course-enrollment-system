@@ -10,8 +10,8 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.StudentRepository;
-import ro.ddavid8.schoolcourseenrollmentsystem.util.BirthdateValidator;
-import ro.ddavid8.schoolcourseenrollmentsystem.util.EmailValidator;
+import ro.ddavid8.schoolcourseenrollmentsystem.utils.BirthdateValidator;
+import ro.ddavid8.schoolcourseenrollmentsystem.utils.EmailValidator;
 
 import java.time.LocalDateTime;
 import java.util.List;
