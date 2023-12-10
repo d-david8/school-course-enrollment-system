@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Enrollment</title>
+</head>
+<body>
+<h1>Hello, <span th:text="${name}">User</span>!</h1><br>
+<h3>You were successfully enrolled in course <span th:text="${courseName}"></span>! </h3><br>
+<h3>You can check the course details <a th:href="@{${url}}">here</a>.</h3>
+</body>
+</html>

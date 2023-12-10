@@ -1,6 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
@@ -27,14 +29,6 @@ public class StudentServiceImpl implements StudentService {
     private final ObjectMapper objectMapper;
     private final TemplateBuilderService templateBuilderService;
     private final Environment environment;
-
-    public StudentServiceImpl(StudentRepository studentRepository, EmailService emailService, ObjectMapper objectMapper, TemplateBuilderService templateBuilderService, Environment environment) {
-        this.studentRepository = studentRepository;
-        this.emailService = emailService;
-        this.objectMapper = objectMapper;
-        this.templateBuilderService = templateBuilderService;
-        this.environment = environment;
-    }
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
