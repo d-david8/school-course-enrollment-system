@@ -2,10 +2,12 @@ package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentInvalidDataException;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.StudentNotFoundException;
+import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EmailDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
@@ -21,33 +23,47 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final EmailService emailService;
     private final ObjectMapper objectMapper;
+    private final TemplateBuilderService templateBuilderService;
+    private final Environment environment;
 
-    public StudentServiceImpl(StudentRepository studentRepository, ObjectMapper objectMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, EmailService emailService, ObjectMapper objectMapper, TemplateBuilderService templateBuilderService, Environment environment) {
         this.studentRepository = studentRepository;
+        this.emailService = emailService;
         this.objectMapper = objectMapper;
+        this.templateBuilderService = templateBuilderService;
+        this.environment = environment;
     }
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
         EmailValidator.validateEmail(studentDTO.getEmail());
-        if(studentDTO.getBirthDate()!=null) {
+        if (studentDTO.getBirthDate() != null) {
             BirthdateValidator.validateBirthDateRange(studentDTO.getBirthDate());
         }
         try {
             studentDTO.setCreatedAt(LocalDateTime.now());
             Student studentSaved = studentRepository.save(objectMapper.convertValue(studentDTO, Student.class));
-            log.info("Student with id {} was saved with success!",studentSaved.getId());
+            log.info("Student with id {} was saved with success.", studentSaved.getId());
+
+            EmailDTO emailDTO = EmailDTO.builder()
+                    .from(environment.getProperty("application.sender.email"))
+                    .to(environment.getProperty("application.recipient.emil"))
+                    .subject("Welcome to school")
+                    .body(templateBuilderService.createStudentBodyEmail(studentSaved))
+                    .build();
+            emailService.sendEmail(emailDTO);
             return objectMapper.convertValue(studentSaved, StudentDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new StudentInvalidDataException("Email address already exist!");
+            throw new StudentInvalidDataException("Email address already exist.");
         }
     }
 
     @Override
     public StudentUpdateDTO updateStudent(Long studentId, StudentUpdateDTO studentUpdateDTO) {
         Student student = studentRepository.findById(studentId).orElseThrow(() ->
-                new StudentNotFoundException("Invalid student id!"));
+                new StudentNotFoundException("Invalid student id."));
         try {
             if (studentUpdateDTO.getEmail() != null) {
                 EmailValidator.validateEmail(studentUpdateDTO.getEmail());
@@ -60,27 +76,34 @@ public class StudentServiceImpl implements StudentService {
             student.setFirstName(studentUpdateDTO.getFirstName() != null ? studentUpdateDTO.getFirstName() : student.getFirstName());
             student.setLastName(studentUpdateDTO.getLastName() != null ? studentUpdateDTO.getLastName() : student.getLastName());
             Student savedStudent = studentRepository.save(student);
-            log.info("Student with id {} was updated successfully", savedStudent.getId());
+            log.info("Student with id {} was updated successfully.", savedStudent.getId());
             return objectMapper.convertValue(savedStudent, StudentUpdateDTO.class);
         } catch (DataIntegrityViolationException e) {
-            throw new StudentInvalidDataException("Email address already exists!");
+            throw new StudentInvalidDataException("Email address already exists.");
         }
     }
 
     @Override
     public List<StudentDTO> getAllStudents() {
         List<Student> studentList = studentRepository.findAll();
+        log.info("Data successfully fetched for students.");
         return studentList.stream().map(student -> objectMapper.convertValue(student, StudentDTO.class)).toList();
+    }
+
+    @Override
+    public StudentDTO getStudentById(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Invalid student id."));
+        log.info("Data successfully fetched for student with id {}.", student.getId());
+        return objectMapper.convertValue(student, StudentDTO.class);
     }
 
     @Override
     public void deleteStudentById(Long studentId) {
         if (studentRepository.existsById(studentId)) {
             studentRepository.deleteById(studentId);
-            log.info("Student with id {} was deleted  with success!", studentId);
-        }
-        else {
-            throw new StudentNotFoundException("Invalid student id!");
+            log.info("Student with id {} was deleted  with success.", studentId);
+        } else {
+            throw new StudentNotFoundException("Invalid student id.");
         }
     }
 }
