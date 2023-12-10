@@ -29,23 +29,20 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> findCoursesByCriteria(
-            @RequestParam(required = false) String courseName,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false, defaultValue = "id") String orderBy,
-            @RequestParam(required = false, defaultValue = "asc") String orderDirection) {
+    public ResponseEntity<List<CourseDTO>> findCoursesByCriteria(@RequestParam(required = false) String courseName, @RequestParam(required = false) String description, @RequestParam(required = false, defaultValue = "id") String orderBy, @RequestParam(required = false, defaultValue = "asc") String orderDirection) {
         return ResponseEntity.ok(courseService.findCoursesByCriteria(courseName, description, orderBy, orderDirection));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id){
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO){
-            return ResponseEntity.ok(courseService.updateCourse(id, courseDTO));
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseDTO courseDTO) {
+        return ResponseEntity.ok(courseService.updateCourse(id, courseDTO));
     }
+
     @DeleteMapping("/{id}")
     public void deleteCourseBy(@PathVariable Long id) {
         courseService.deleteCourse(id);
