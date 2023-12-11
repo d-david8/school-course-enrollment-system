@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface CourseService {
 
-    public CourseDTO createCourse(CourseDTO courseDTO);
+    CourseDTO createCourse(CourseDTO courseDTO);
 
-    public List<CourseDTO> findCoursesByCriteria(String courseName, String description, String orderBy, String orderDirection);
+    List<CourseDTO> findCoursesByCriteria(String courseName, String description, String orderBy, String orderDirection);
 
     CourseDTO getCourseById(Long id);
 
     CourseDTO updateCourse(Long id, CourseDTO courseDTO);
 
     void deleteCourse(Long id);
+
+    List<String> getRecommended();
 }

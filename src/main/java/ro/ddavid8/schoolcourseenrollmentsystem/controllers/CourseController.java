@@ -45,4 +45,9 @@ public class CourseController {
     public void deleteCourseBy(@PathVariable Long id) {
         courseService.deleteCourse(id);
     }
+
+    @GetMapping("/interest-course-recommendation")
+    public ResponseEntity<List<String>> getRecommended() {
+        return ResponseEntity.ok(courseService.getRecommended());
+    }
 }

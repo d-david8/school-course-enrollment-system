@@ -15,7 +15,10 @@ import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CourseRepository;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.CustomCourseRepository;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CustomCourseRepository customCourseRepository;
+    private final OpenAIIntegrationService openAIIntegrationService;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -53,6 +57,7 @@ public class CourseServiceImpl implements CourseService {
         return objectMapper.convertValue(course, CourseDTO.class);
     }
 
+
     @Override
     public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
         Course course = courseRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("Invalid course id."));
@@ -77,5 +82,17 @@ public class CourseServiceImpl implements CourseService {
         } else {
             throw new StudentNotFoundException("Invalid course id!");
         }
+    }
+
+    @Override
+    public List<String> getRecommended() {
+        List<Course> courses = courseRepository.findAll();
+        Map<String, Integer> coursesMap = courses.stream()
+                .collect(Collectors.toMap(Course::getCourseName, course -> course.getStudents().size()));
+        String openAiPrompt = "Based on the existing courses and the number of enrolled students for " +
+                "each course, we recommend adding two new courses to the available options. The list of " +
+                "courses is as follows:" + coursesMap +
+                ". Please provide two examples separated by a comma and and nothing else in response";
+        return Arrays.stream(openAIIntegrationService.getOpenAIResponse(openAiPrompt).split(", ")).toList();
     }
 }

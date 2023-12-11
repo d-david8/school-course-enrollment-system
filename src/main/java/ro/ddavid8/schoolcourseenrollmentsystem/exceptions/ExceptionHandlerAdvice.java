@@ -19,8 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @ControllerAdvice
@@ -49,7 +48,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CourseNotFoundException.class)
     public ResponseEntity<String> courseNotFoundException(CourseNotFoundException courseNotFoundException) {
         log.error(courseNotFoundException.getMessage());
-        return new ResponseEntity<>(objectToString(Map.of("message", courseNotFoundException.getMessage())), BAD_REQUEST);
+        return new ResponseEntity<>(objectToString(Map.of("message", courseNotFoundException.getMessage())), NOT_FOUND);
     }
 
     @ExceptionHandler(CourseInvalidDataException.class)
@@ -69,6 +68,13 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> enrollmentNotFoundException(EnrollmentNotFoundException enrollmentNotFoundException) {
         log.error(enrollmentNotFoundException.getMessage());
         return new ResponseEntity<>(objectToString(Map.of("message", enrollmentNotFoundException.getMessage())), BAD_REQUEST);
+    }
+
+    // open AI exception
+    @ExceptionHandler(OpenAIException.class)
+    public ResponseEntity<String> openAIException(OpenAIException openAIException) {
+        log.error(openAIException.getMessage());
+        return new ResponseEntity<>(objectToString(Map.of("message", openAIException.getMessage())), INTERNAL_SERVER_ERROR);
     }
 
     // validation exceptions
