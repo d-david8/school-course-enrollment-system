@@ -4,5 +4,5 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EnrollmentDTO;
 
 public interface EnrollmentService {
 
-    public EnrollmentDTO enroll(EnrollmentDTO  enrollmentDTO);
+    public EnrollmentDTO enroll(EnrollmentDTO enrollmentDTO);
 }

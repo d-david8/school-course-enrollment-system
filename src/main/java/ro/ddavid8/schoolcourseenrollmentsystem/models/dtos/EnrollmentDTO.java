@@ -1,12 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.models.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
-import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Student;
 
 import java.time.LocalDate;
 

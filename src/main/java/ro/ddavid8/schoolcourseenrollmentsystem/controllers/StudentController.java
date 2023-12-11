@@ -2,6 +2,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,16 +14,13 @@ import ro.ddavid8.schoolcourseenrollmentsystem.services.StudentService;
 import java.util.List;
 
 @Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/students")
 @Tag(name = "Students APIs", description = "Endpoints for managing the students")
 public class StudentController {
 
     private final StudentService studentService;
-
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) {

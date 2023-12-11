@@ -19,9 +19,9 @@ import ro.ddavid8.schoolcourseenrollmentsystem.services.UserService;
 
 import java.io.IOException;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;

@@ -1,5 +1,6 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,9 +11,10 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.JwtAuthenticationResp
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.RegisterRequest;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.AuthenticationService;
 
-@RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/security")
+@Tag(name = "Security APIs", description = "Endpoints for managing the authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;

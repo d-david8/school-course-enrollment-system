@@ -1,7 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import ro.ddavid8.schoolcourseenrollmentsystem.exceptions.EnrollmentInvalidDataException;
@@ -18,8 +18,8 @@ import ro.ddavid8.schoolcourseenrollmentsystem.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-@AllArgsConstructor
 public class EnrollmentServiceImpl implements EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;

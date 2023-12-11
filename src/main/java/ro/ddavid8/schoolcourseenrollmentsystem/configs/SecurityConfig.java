@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ro.ddavid8.schoolcourseenrollmentsystem.filter.JwtAuthenticationFilter;
-import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Role;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.UserService;
 
 @Configuration
@@ -50,7 +49,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/authentication", "/api/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/security/authentication", "/api/security/register").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated()
                 )

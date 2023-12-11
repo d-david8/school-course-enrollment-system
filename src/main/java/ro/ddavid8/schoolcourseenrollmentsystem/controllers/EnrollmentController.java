@@ -1,6 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,16 +12,13 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.EnrollmentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.EnrollmentService;
 
 @Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/enrollments")
-@Tag(name = "Courses APIs", description = "Endpoints for managing the enrolments")
+@Tag(name = "Enrollment APIs", description = "Endpoints for managing the enrolments")
 public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
-
-    public EnrollmentController(EnrollmentService enrollmentService) {
-        this.enrollmentService = enrollmentService;
-    }
 
     @PostMapping
     public ResponseEntity<EnrollmentDTO> enroll(@RequestBody EnrollmentDTO enrollmentDTO) {

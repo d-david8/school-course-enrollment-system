@@ -10,9 +10,10 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.User;
 import ro.ddavid8.schoolcourseenrollmentsystem.repositories.UserRepository;
 import ro.ddavid8.schoolcourseenrollmentsystem.services.UserService;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
+@Component
+
 public class SeedDataConfig implements CommandLineRunner {
 
     private final UserRepository userRepository;
