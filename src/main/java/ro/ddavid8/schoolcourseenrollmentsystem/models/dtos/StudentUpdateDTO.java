@@ -1,13 +1,10 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.models.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 public class StudentUpdateDTO {

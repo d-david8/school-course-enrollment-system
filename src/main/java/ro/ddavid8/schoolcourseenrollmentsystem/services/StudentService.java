@@ -1,6 +1,5 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
-import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.CourseDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentDTO;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.dtos.StudentUpdateDTO;
 

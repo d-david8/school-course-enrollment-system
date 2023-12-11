@@ -10,12 +10,12 @@ import ro.ddavid8.schoolcourseenrollmentsystem.repositories.UserRepository;
 
 import java.time.LocalDateTime;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    
+
     @Override
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {

@@ -2,6 +2,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,16 +13,13 @@ import ro.ddavid8.schoolcourseenrollmentsystem.services.CourseService;
 import java.util.List;
 
 @Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/courses")
 @Tag(name = "Courses APIs", description = "Endpoints for managing the courses")
 public class CourseController {
 
     private final CourseService courseService;
-
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
 
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@Valid @RequestBody CourseDTO courseDTO) {

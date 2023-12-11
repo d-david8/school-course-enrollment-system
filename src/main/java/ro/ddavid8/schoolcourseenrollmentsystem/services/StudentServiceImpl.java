@@ -1,7 +1,7 @@
 package ro.ddavid8.schoolcourseenrollmentsystem.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
-@AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
@@ -41,12 +41,7 @@ public class StudentServiceImpl implements StudentService {
             Student studentSaved = studentRepository.save(objectMapper.convertValue(studentDTO, Student.class));
             log.info("Student with id {} was saved with success.", studentSaved.getId());
 
-            EmailDTO emailDTO = EmailDTO.builder()
-                    .from(environment.getProperty("application.sender.email"))
-                    .to(environment.getProperty("application.recipient.emil"))
-                    .subject("Welcome to school")
-                    .body(templateBuilderService.createStudentBodyEmail(studentSaved))
-                    .build();
+            EmailDTO emailDTO = EmailDTO.builder().from(environment.getProperty("application.sender.email")).to(environment.getProperty("application.recipient.emil")).subject("Welcome to school").body(templateBuilderService.createStudentBodyEmail(studentSaved)).build();
             emailService.sendEmail(emailDTO);
             return objectMapper.convertValue(studentSaved, StudentDTO.class);
         } catch (DataIntegrityViolationException e) {
@@ -56,8 +51,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentUpdateDTO updateStudent(Long studentId, StudentUpdateDTO studentUpdateDTO) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() ->
-                new StudentNotFoundException("Invalid student id."));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException("Invalid student id."));
         try {
             if (studentUpdateDTO.getEmail() != null) {
                 EmailValidator.validateEmail(studentUpdateDTO.getEmail());
