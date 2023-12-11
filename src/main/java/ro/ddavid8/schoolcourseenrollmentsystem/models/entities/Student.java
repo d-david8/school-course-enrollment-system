@@ -36,7 +36,6 @@ public class Student {
     private String email;
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

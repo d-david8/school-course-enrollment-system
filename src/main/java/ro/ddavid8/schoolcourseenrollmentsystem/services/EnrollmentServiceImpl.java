@@ -47,8 +47,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
             throw new EnrollmentInvalidDataException("Student already enrolled at this course!");
         }
         Enrollment enrollment = new Enrollment();
-        enrollment.setStudent(optionalStudent.get());
-        enrollment.setCourse(optionalCourse.get());
+        enrollment.setStudent(student);
+        enrollment.setCourse(course);
         enrollment.setEnrolmentDate(LocalDate.now());
         enrollment.setProgress(0);
         Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
