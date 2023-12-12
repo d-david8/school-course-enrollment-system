@@ -3,6 +3,7 @@ package ro.ddavid8.schoolcourseenrollmentsystem.repositories;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
@@ -10,13 +11,11 @@ import ro.ddavid8.schoolcourseenrollmentsystem.models.entities.Course;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Repository
 public class CustomCourseRepositoryImpl implements CustomCourseRepository {
-    private final EntityManager entityManager;
 
-    public CustomCourseRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    private final EntityManager entityManager;
 
     public List<Course> findCoursesByCriteria(String courseName, String description, Sort sort) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

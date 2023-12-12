@@ -3,11 +3,14 @@ package ro.ddavid8.schoolcourseenrollmentsystem.models.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class CourseDTO {
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
