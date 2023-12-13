@@ -11,6 +11,7 @@ Additionally, the API will support functionalities related to the assignment of 
 - Course enrollment
 - Email notification for student creation and course enrollment
 - Open AI integration for new course based on the current enrolments
+- Secured endpoints(except the GET)
 
 ## Technologies and frameworks used:
 
