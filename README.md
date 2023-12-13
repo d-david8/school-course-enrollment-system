@@ -38,48 +38,49 @@ Additionally, the API will support functionalities related to the assignment of 
 
 #### Database connection properties
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/{DB_NAME}
-spring.datasource.username={USERNAME}
-spring.datasource.password={PASSWORD}
-spring.datasource.driver-class-name=org.postgresql.Driver
+- spring.datasource.url=jdbc:postgresql://localhost:5432/{DB_NAME}
+- spring.datasource.username={USERNAME}
+- spring.datasource.password={PASSWORD}
+- spring.datasource.driver-class-name=org.postgresql.Driver
 
 #### JPA properties
 
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+- spring.jpa.show-sql=true
+- spring.jpa.hibernate.ddl-auto=update
+- spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
 #### Logging properties
 
-logging.level.org.hibernate.SQL=DEBUG
-logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+- logging.level.org.hibernate.SQL=DEBUG
+- logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 #### JWT expiration time in ms
 
-token.expiration.ms=3600000
+- token.expiration.ms=3600000
 
 #### JWT secret key
 
-token.secret.key={TOKEN_KEY}
-//terminal command for generating a token key: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+- token.secret.key={TOKEN_KEY}
+- //terminal command for generating a token key: node -e "console.log(require('crypto').randomBytes(32).toString('
+  hex'))"
 
 #### Email Settings
 
-spring.mail.host={HOST_SERVER}
-spring.mail.username={USERNAME}
-spring.mail.password={PASSWORD}
-spring.mail.properties.mail.transport.protocol=smtp
-spring.mail.properties.mail.smtp.port=26
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
-spring.mail.properties.mail.smtp.starttls.required=true
-application.sender.email={SOURCE_EMAIL_ADDRESS}
+- spring.mail.host={HOST_SERVER}
+- spring.mail.username={USERNAME}
+- spring.mail.password={PASSWORD}
+- spring.mail.properties.mail.transport.protocol=smtp
+- spring.mail.properties.mail.smtp.port=26
+- spring.mail.properties.mail.smtp.auth=true
+- spring.mail.properties.mail.smtp.starttls.enable=true
+- spring.mail.properties.mail.smtp.starttls.required=true
+- application.sender.email={SOURCE_EMAIL_ADDRESS}
 
 #### OpenAI settings
 
-open.ai.url=https://api.openai.com/v1/chat/completions
-open.ai.model=gpt-3.5-turbo
-open.ai.key={SECRET_KEY}
+- open.ai.url=https://api.openai.com/v1/chat/completions
+- open.ai.model=gpt-3.5-turbo
+- open.ai.key={SECRET_KEY}
 
 ### Security endpoints
 
