@@ -107,6 +107,8 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
+![img.png](img.png)
+
 - Error Responses:
     - `400 Bad Request`
 
@@ -447,6 +449,8 @@ Additionally, the API will support functionalities related to the assignment of 
   "courseId": 2
 }
 ```
+
+![img_1.png](img_1.png)
 
 - Error Responses:
     - `404 Bad Request`
