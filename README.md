@@ -78,7 +78,7 @@ Additionally, the API will support functionalities related to the assignment of 
 
 ### Student endpoints:
 
-#### 1. Create Student
+#### 1. Create student
 
 - Endpoint: `/api/students`
 - Method: `POST`
@@ -119,7 +119,7 @@ Additionally, the API will support functionalities related to the assignment of 
 - Error Responses:
     - `403 Forbidden`
 
-#### 2. Read Students
+#### 2. Read students
 
 ##### 2.1 Get student by id
 
@@ -177,7 +177,7 @@ Additionally, the API will support functionalities related to the assignment of 
 ]
 ```
 
-#### 3. Update Student
+#### 3. Update student
 
 - Endpoint: `/api/students/{id}`
 - Method: `PUT`
@@ -227,7 +227,7 @@ Additionally, the API will support functionalities related to the assignment of 
 - Error Responses:
     - `403 Forbidden`
 
-#### 4 Delete Student
+#### 4 Delete student
 
 - Endpoint: `/api/students/{id}`
 - Method: `DELETE`
@@ -272,7 +272,7 @@ Additionally, the API will support functionalities related to the assignment of 
 ```
 
 - Error Responses:
-    - `400 Bad Reques`
+    - `400 Bad Request`
 
 ```json
 {
@@ -341,7 +341,7 @@ Additionally, the API will support functionalities related to the assignment of 
 ]
 ```
 
-#### 3. Update Course
+#### 3. Update course
 
 - Endpoint: /api/courses/{id}
 - Method: PUT
@@ -399,7 +399,7 @@ Additionally, the API will support functionalities related to the assignment of 
 - Error Responses:
     - `403 Forbidden`
 
-#### 5. Interest course recommendation
+#### 5. Interest course recommendation with Open AI
 
 - Endpoint: `/api/courses/interest-course-recommendation`
 - Method: `GET`
