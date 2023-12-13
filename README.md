@@ -115,6 +115,9 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
+- Error Responses:
+    - `403 Forbidden`
+
 #### 2. Read Students
 
 ##### 2.1 Get student by id
@@ -220,6 +223,9 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
+- Error Responses:
+    - `403 Forbidden`
+
 #### 4 Delete Student
 
 - Endpoint: `/api/students/{id}`
@@ -272,6 +278,9 @@ Additionally, the API will support functionalities related to the assignment of 
   "courseName": "Course name is mandatory."
 }
 ```
+
+- Error Responses:
+    - `403 Forbidden`
 
 #### 2. Read courses
 
@@ -375,6 +384,9 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
+- Error Responses:
+    - `403 Forbidden`
+
 #### 4. Delete course
 
 - Endpoint: `/api/courses/{id}`
@@ -383,7 +395,10 @@ Additionally, the API will support functionalities related to the assignment of 
 - Success responses:
     - `200 OK`
 
-#### 5. Interest course recomandation
+- Error Responses:
+    - `403 Forbidden`
+
+#### 5. Interest course recommendation
 
 - Endpoint: `/api/courses/interest-course-recommendation`
 - Method: `GET`
