@@ -34,36 +34,36 @@ Additionally, the API will support functionalities related to the assignment of 
 - JUnit
 - Mockito
 
-### Project configuration
+## Project configuration
 
-# Database connection properties
+#### Database connection properties
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/{DB_NAME}
 spring.datasource.username={USERNAME}
 spring.datasource.password={PASSWORD}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
-# JPA properties
+#### JPA properties
 
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-# Logging properties
+#### Logging properties
 
 logging.level.org.hibernate.SQL=DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
-# JWT expiration time in ms
+#### JWT expiration time in ms
 
 token.expiration.ms=3600000
 
-# JWT secret key
+#### JWT secret key
 
 token.secret.key={TOKEN_KEY}
 //terminal command for generating a token key: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
-# Email Settings
+#### Email Settings
 
 spring.mail.host={HOST_SERVER}
 spring.mail.username={USERNAME}
@@ -75,7 +75,7 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 application.sender.email={SOURCE_EMAIL_ADDRESS}
 
-# OpenAI key
+#### OpenAI settings
 
 open.ai.url=https://api.openai.com/v1/chat/completions
 open.ai.model=gpt-3.5-turbo
