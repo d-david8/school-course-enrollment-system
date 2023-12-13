@@ -33,6 +33,48 @@ Additionally, the API will support functionalities related to the assignment of 
 - JUnit
 - Mockito
 
+### Security endpoints
+
+#### 1. Register user
+
+- Endpoint: `/api/security/register`
+- Method: `POST`
+- Request body:
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "username": "john.doe",
+  "password": "123456"
+}
+```
+
+#### 2. Authentication
+
+- Endpoint: `/api/security/register`
+- Method: `POST`
+- Request body:
+
+```json
+{
+  "username": "john.doe",
+  "password": "123456"
+}
+```
+
+- Success responses:
+    - `200 OK`
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTcwMjUwNDQ2MCwiZXhwIjoxNzAyNTA4MDYwfQ.hFE5zuYviI3QTjxahrIGDq5pliFfjX-M9e72HSCDRPU"
+}
+```
+
+- Error Responses:
+    - `403 Forbidden`
+
 ### Student endpoints:
 
 #### 1. Create Student
@@ -363,18 +405,23 @@ Additionally, the API will support functionalities related to the assignment of 
   "message": "An error occur while try to obtain the recommended products"
 }
 ```
+
 ### Enrollments endpoint
+
 - Endpoint: `/api/enrollments`
 - Method: `POST`
 - Request body:
+
 ```json
 {
   "studentId": 5,
   "courseId": 2
 }
 ```
+
 - Success responses:
-  - `200 OK`
+    - `200 OK`
+
 ```json
 {
   "id": 7,
@@ -384,15 +431,19 @@ Additionally, the API will support functionalities related to the assignment of 
   "courseId": 2
 }
 ```
+
 - Error Responses:
     - `404 Bad Request`
+
 ```json
 {
   "message": "Student already enrolled at this course!"
 }
 ```
+
 - Error Responses:
     - `400 Not Found`
+
 ```json
 {
   "message": "Invalid student id!"
