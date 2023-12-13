@@ -169,7 +169,8 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
-- `404 Not Found`
+- Error Responses:
+    - `404 Not Found`
 
 ```json
 {
@@ -258,7 +259,7 @@ Additionally, the API will support functionalities related to the assignment of 
 }
 ```
 
-##### 2.2 Get all courses with filter and sort
+##### 2.2 Get all courses filtered and/or sorted
 
 - Endpoint: `/api/courses`
 - Method: `GET`
@@ -285,7 +286,77 @@ Additionally, the API will support functionalities related to the assignment of 
     "description": "Introduction to web development concepts.",
     "createdAt": "2023-12-11T23:19:15.504107"
   }
-  // ... other courses
 ]
 ```
 
+#### 3. Update Course
+
+- Endpoint: /api/courses/{id}
+- Method: PUT
+- Path variable: {id} - The unique identifier of the course to be updated.
+- Request body:
+
+```json
+{
+  "courseName": "Java Introduction",
+  "description": "Java course for non-programmers."
+}
+```
+
+- Success responses:
+    - `200 OK`
+
+```json
+{
+  "id": 1,
+  "courseName": "Java Introduction",
+  "description": "Java course for non-programmers.",
+  "createdAt": "2023-12-11T23:18:52.173059"
+}
+```
+
+- Error Responses:
+    - `404 Not Found`
+
+```json
+{
+  "message": "Invalid course id."
+}
+```
+
+- Error Responses:
+    - `400 Bad Request`
+
+```json
+{
+  "message": "The course name already exists."
+}
+```
+
+#### 4. Delete course
+
+- Endpoint: `/api/courses/{id}`
+- Method: `DELETE`
+- Path variable: `{id}` - The unique identifier of the course to be deleted.
+- Success responses:
+    - `200 OK`
+
+#### 5. Interest course recomandation
+
+- Endpoint: `/api/courses/interest-course-recommendation`
+- Method: `GET`
+- Success responses:
+    - `200 OK`
+
+```json
+
+```
+
+- Error Responses:
+    - `500 Internal Server Error`
+
+```json
+{
+  "message": "An error occur while try to obtain the recommended products"
+}
+```
