@@ -349,7 +349,10 @@ Additionally, the API will support functionalities related to the assignment of 
     - `200 OK`
 
 ```json
-
+[
+  "Chemistry",
+  "Physics"
+]
 ```
 
 - Error Responses:
@@ -358,5 +361,40 @@ Additionally, the API will support functionalities related to the assignment of 
 ```json
 {
   "message": "An error occur while try to obtain the recommended products"
+}
+```
+### Enrollments endpoint
+- Endpoint: `/api/enrollments`
+- Method: `POST`
+- Request body:
+```json
+{
+  "studentId": 5,
+  "courseId": 2
+}
+```
+- Success responses:
+  - `200 OK`
+```json
+{
+  "id": 7,
+  "enrolmentDate": "2023-12-13",
+  "progress": 0,
+  "studentId": 5,
+  "courseId": 2
+}
+```
+- Error Responses:
+    - `404 Bad Request`
+```json
+{
+  "message": "Student already enrolled at this course!"
+}
+```
+- Error Responses:
+    - `400 Not Found`
+```json
+{
+  "message": "Invalid student id!"
 }
 ```
