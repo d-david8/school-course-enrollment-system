@@ -82,6 +82,10 @@ Additionally, the API will support functionalities related to the assignment of 
 - open.ai.model=gpt-3.5-turbo
 - open.ai.key={SECRET_KEY}
 
+### Swagger
+
+- [Here](http://localhost:8080/swagger-ui/index.html#/)
+
 ### Security endpoints
 
 #### 1. Register user
